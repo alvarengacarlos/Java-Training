@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  mariadb-dev:
+    image: mariadb:10.6.14-focal
+    container_name: mariadb-dev
+    ports:
+      - '3306:3306'
+    environment:
+      - MARIADB_ROOT_PASSWORD=rootpw
+      - MARIADB_DATABASE=ecommerce
