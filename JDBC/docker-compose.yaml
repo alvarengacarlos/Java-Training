@@ -1,0 +1,14 @@
+services:
+  mysql-db:
+    image: mysql
+    container_name: mysql-db
+    ports:
+      - 3306:3306
+    volumes:
+      - ./main.sql:/tmp/main.sql
+    environment:
+      MYSQL_DATABASE: jdbc_test
+      MYSQL_ROOT_PASSWORD: rootpw
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpw
+
