@@ -1,0 +1,61 @@
+plugins {
+    id 'application'
+    id 'org.springframework.boot' version '3.5.6'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.alvarengacarlos.springbootapi'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springBootStarterWebDependency = 'org.springframework.boot:spring-boot-starter-web'
+}
+
+dependencies {
+    implementation 'org.hibernate.validator:hibernate-validator:9.0.1.Final'    
+    implementation 'org.postgresql:postgresql:42.7.8'
+    implementation 'com.zaxxer:HikariCP:7.0.2'
+    implementation springBootStarterWebDependency
+}
+
+testing {
+    suites {
+        configureEach {
+            dependencies {                
+                implementation 'org.junit.jupiter:junit-jupiter:6.0.0'
+                runtimeOnly 'org.junit.platform:junit-platform-launcher'
+                implementation 'org.mockito:mockito-core:5.20.0'
+            }
+
+            useJUnitJupiter()
+        }
+
+        integrationTest(JvmTestSuite) {
+            dependencies {
+                implementation project()
+            }
+        }
+        
+        componentTest(JvmTestSuite) {
+            dependencies {
+                implementation project()
+                implementation springBootStarterWebDependency
+            }
+        }
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+application {
+    mainClass = 'com.alvarengacarlos.springbootapi.App'
+}

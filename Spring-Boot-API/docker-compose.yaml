@@ -1,0 +1,26 @@
+volumes:
+  postgres_vol:
+
+networks:
+  springbootapi_net:
+
+services:
+  flyway:
+    image: redgate/flyway
+    volumes:
+      - ./migrations/:/flyway/sql/:ro
+    networks:
+      - springbootapi_net
+
+  postgres:
+    image: postgres:17.4
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=pg
+      - POSTGRES_PASSWORD=pgpw
+      - POSTGRES_DB=spring_boot_api
+    networks:
+      - springbootapi_net
